@@ -1,34 +1,19 @@
 package main
 
 import (
-	"fmt"
-	"io"
+	"e2/handlers"
 	"log"
 	"net/http"
+	"os"
 )
 
 func main() {
-	http.HandleFunc("/favicon.ico", func(w http.ResponseWriter, r *http.Request) {
+	l := log.New(os.Stdout, "product-api", log.LstdFlags)
+	hh := handlers.NewHello(l)
 
-	})
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		// log.Print("Request path:", r.URL.Path)
-		log.Println("Hello World!")
-		d, err := io.ReadAll(r.Body)
-		if err != nil {
-			http.Error(w, "Oops!", http.StatusBadRequest)
-			log.Printf("Error %s\n", err)
-		} else {
-			log.Printf("Data %s\n", d)
-		}
+	sm := http.NewServeMux()
 
-		fmt.Fprintf(w, "Hello %s\n", d)
+	sm.Handle("/", hh)
 
-	})
-
-	http.HandleFunc("/goodboy", func(w http.ResponseWriter, r *http.Request) {
-		log.Println("Stay connected!")
-	})
-
-	http.ListenAndServe(":9090", nil)
+	http.ListenAndServe(":9090", sm)
 }
