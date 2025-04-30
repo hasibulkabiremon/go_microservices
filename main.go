@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	"e2/handlers"
+	"e3/handlers"
 	"log"
 	"net/http"
 	"os"
@@ -11,14 +11,13 @@ import (
 )
 
 func main() {
-	l := log.New(os.Stdout, "Test-api", log.LstdFlags)
-	hh := handlers.NewHello(l)
-	gh := handlers.NewGoodbye(l)
+	l := log.New(os.Stdout, "RESTfull", log.LstdFlags)
+	//create handlers
+	ph := handlers.NewProducts(l)
 
+	//create a new servemux and register handlers
 	sm := http.NewServeMux()
-
-	sm.Handle("/", hh)
-	sm.Handle("/goodbye", gh)
+	sm.Handle("/", ph)
 
 	s := &http.Server{
 		Addr:         ":9090",
