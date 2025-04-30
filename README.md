@@ -24,3 +24,6 @@
 
                                             - // Field appears in JSON as key "-".
                                             - Field int `json:"-,"`
+    - Use Json Encoder
+    - Implent METHOD :- Allowed: curl localhost:9090 | jq // Get
+                        Not Allowed : curl localhost:9090 -XDELETE -v | jq
