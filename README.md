@@ -24,3 +24,4 @@
 
                                             - // Field appears in JSON as key "-".
                                             - Field int `json:"-,"`
+    - Use Json Encoder
