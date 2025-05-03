@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"e3/data"
+	"e4/data"
 	"log"
 	"net/http"
 )
@@ -20,10 +20,20 @@ func (p *Products) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if r.Method == http.MethodPost {
+		p.addProducts(w, r)
+		return
+	}
+
 	// catch all
 	w.WriteHeader(http.StatusMethodNotAllowed)
 }
+
+func (p *Products) addProducts(w http.ResponseWriter, r *http.Request) {
+	p.l.Println("Handle POST Product")
+}
 func (p *Products) getProducts(w http.ResponseWriter, r *http.Request) {
+	p.l.Println("Handle GET Product")
 	lp := data.GetProducts()
 	err := lp.ToJSON(w)
 	if err != nil {

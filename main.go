@@ -2,7 +2,8 @@ package main
 
 import (
 	"context"
-	"e3/handlers"
+	"e4/handlers"
+	"github.com/nicholasjackson/env"
 	"log"
 	"net/http"
 	"os"
@@ -10,7 +11,10 @@ import (
 	"time"
 )
 
+var bindAddress = env.String("BIND_ADDRESS", false, ":9090", "Bind Address for the server")
+
 func main() {
+	env.Parse()
 	l := log.New(os.Stdout, "RESTfull", log.LstdFlags)
 	//create handlers
 	ph := handlers.NewProducts(l)
@@ -20,7 +24,7 @@ func main() {
 	sm.Handle("/", ph)
 
 	s := &http.Server{
-		Addr:         ":9090",
+		Addr:         *bindAddress,
 		Handler:      sm,
 		IdleTimeout:  120 * time.Second,
 		ReadTimeout:  1 * time.Second,
