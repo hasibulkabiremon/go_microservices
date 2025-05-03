@@ -27,3 +27,9 @@
     - Use Json Encoder
     - Implent METHOD :- Allowed: curl localhost:9090 | jq // Get
                         Not Allowed : curl localhost:9090 -XDELETE -v | jq
+
+        POST : curl localhost:9090 -d {} | jq
+            --Read the input what in {}curly from server with r.body and parse it througt FromJson and AddProduct func
+            this will add in existing server item.
+
+    
