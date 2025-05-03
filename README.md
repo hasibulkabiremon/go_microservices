@@ -32,4 +32,7 @@
             --Read the input what in {}curly from server with r.body and parse it througt FromJson and AddProduct func
             this will add in existing server item.
 
+        PUT : curl localhost:9090/1 -d '{}' | jq
+            for output : curl localhost:9090 | jq
+
     
