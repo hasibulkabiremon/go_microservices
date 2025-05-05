@@ -2,7 +2,8 @@ package main
 
 import (
 	"context"
-	"e4/handlers"
+	"e5/handlers"
+	"github.com/gorilla/mux"
 	"github.com/nicholasjackson/env"
 	"log"
 	"net/http"
@@ -20,8 +21,9 @@ func main() {
 	ph := handlers.NewProducts(l)
 
 	//create a new servemux and register handlers
-	sm := http.NewServeMux()
-	sm.Handle("/", ph)
+	sm := mux.NewRouter()
+	getRouter := sm.Methods("GET").Subrouter()
+	getRouter.HandleFunc("/", ph.GetProducts)
 
 	s := &http.Server{
 		Addr:         *bindAddress,
