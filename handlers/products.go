@@ -40,7 +40,7 @@ func (p *Products) UpdateProducts(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func (p *Products) addProducts(w http.ResponseWriter, r *http.Request) {
+func (p *Products) AddProducts(w http.ResponseWriter, r *http.Request) {
 	p.l.Println("Handle POST Product")
 	prod := &data.Product{}
 
