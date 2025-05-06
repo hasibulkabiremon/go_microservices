@@ -4,6 +4,9 @@ import (
 	"e5/data"
 	"log"
 	"net/http"
+	"strconv"
+
+	"github.com/gorilla/mux"
 )
 
 type Products struct {
@@ -14,8 +17,13 @@ func NewProducts(l *log.Logger) *Products {
 	return &Products{l}
 }
 
-func (p *Products) updateProducts(id int, w http.ResponseWriter, r *http.Request) {
+func (p *Products) UpdateProducts(w http.ResponseWriter, r *http.Request) {
 
+	vars := mux.Vars(r)
+	id, er := strconv.Atoi(vars["id"])
+	if er != nil {
+		http.Error(w, "Unable to find ID", http.StatusBadRequest)
+	}
 	prod := &data.Product{}
 
 	err := prod.FromJSON(r.Body)
