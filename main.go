@@ -31,7 +31,7 @@ func main() {
 
 	postRouter := sm.Methods(http.MethodPost).Subrouter()
 	postRouter.HandleFunc("/", ph.AddProducts)
-	postRouter.Use(ph.MiddlewareProductValidation)
+	// postRouter.Use(ph.MiddlewareProductValidation)
 
 	s := &http.Server{
 		Addr:         *bindAddress,

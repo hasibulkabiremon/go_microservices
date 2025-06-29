@@ -3,6 +3,7 @@ package handlers
 import (
 	"context"
 	"e5/data"
+	"io"
 	"log"
 	"net/http"
 	"strconv"
@@ -39,14 +40,26 @@ func (p Products) UpdateProducts(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func (p *Products) AddProducts(w http.ResponseWriter, r *http.Request) {
+func (p Products) AddProducts(w http.ResponseWriter, r *http.Request) {
+
+	body, _ := io.ReadAll(r.Body)
+	p.l.Println("Raw body: %s", body)
+
 	p.l.Println("Handle POST Product")
 	prod := &data.Product{}
 
-	err := prod.FromJSON(r.Body)
-	if err != nil {
+	if err := prod.FromJSON(r.Body); err != nil {
 		http.Error(w, "Unable to unmarshal json", http.StatusBadRequest)
+		p.l.Println("Decode error:", err)
+		return
 	}
+
+	// err := prod.FromJSON(r.Body)
+	// if err != nil {
+	// 	p.l.Println(err)
+	// 	http.Error(w, "Unable to unmarshal json", http.StatusBadRequest)
+	// }
+
 	p.l.Printf("Prod: %#v", prod)
 	data.AddProduct(prod)
 }
